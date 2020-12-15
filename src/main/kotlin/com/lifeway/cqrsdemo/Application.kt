@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.mongodb.client.MongoClient
 import org.axonframework.eventhandling.tokenstore.TokenStore
-import org.axonframework.eventsourcing.CachingEventSourcingRepository
 import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine
 import org.axonframework.extensions.mongo.DefaultMongoTemplate
@@ -23,7 +22,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 @SpringBootApplication
 @EnableMongoRepositories
 @EnableReactiveMongoRepositories
-class CqrsDemoApplication {
+class Application {
 
 	@Bean
 	fun eventStore(storageEngine: EventStorageEngine?): EmbeddedEventStore? {
@@ -66,7 +65,7 @@ class CqrsDemoApplication {
 	companion object {
 		@JvmStatic
 		fun main(args: Array<String>) {
-			runApplication<CqrsDemoApplication>(*args)
+			runApplication<Application>(*args)
 		}
 	}
 }
