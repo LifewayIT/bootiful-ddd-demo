@@ -50,8 +50,6 @@ class Application {
 		).build()
 	}
 
-
-
 	/**
 	 * TOKEN TRACKING PROCESSORS DO NOT SCALE WELL: https://docs.axoniq.io/reference-guide/v/4.0/configuring-infrastructure-components/event-processing/event-processors.
 	 * Essentially all processors would be managed by a single node, not properly distributing the traffic.

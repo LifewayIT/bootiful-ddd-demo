@@ -70,7 +70,7 @@ class KafkaConsumer(private val commandGateway: CommandGateway, private val broa
     fun listenForCommands(message: String) {
         log.debug("Message consumed by command consumer: $message")
         val wrapper: CommandWrapper = Json.deserialize(message, CommandWrapper::class)
-        val command = Json.deserialize(wrapper.payload, Class.forName("com.lifeway.cqrsdemo.domain.${wrapper.commandType}").kotlin)
+        val command = Json.deserialize(wrapper.payload, Class.forName("com.lifeway.bootiful.ddd.aggregate.${wrapper.commandType}").kotlin)
         if (wrapper.awaitingReply) {
             val tryToSerialize = Try {
                 val commandResult: Any? = commandGateway.sendAndWait(command)

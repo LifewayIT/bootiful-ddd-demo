@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import kotlin.reflect.KClass
 
-
 object Json {
     private val mapper = ObjectMapper().registerModule(KotlinModule())
     fun serialize(any: Any): String = mapper.writeValueAsString(any)

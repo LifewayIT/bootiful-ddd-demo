@@ -75,7 +75,7 @@ class PersonHandler(
             .flatMap {
                 commandService.sendForResponse(CommandWrapper.from(
                     personId,
-                        AddAddress(personId, it.line1, it.line2)
+                    AddAddress(personId, it.line1, it.line2)
                 ))
             }
             .flatMap { ServerResponse.ok().bodyValue(it) }

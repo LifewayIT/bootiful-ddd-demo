@@ -1,7 +1,6 @@
 package com.lifeway.bootiful.ddd.sagas
 
 import com.lifeway.bootiful.ddd.aggregate.*
-import com.lifeway.cqrsdemo.aggregate.*
 import com.lifeway.bootiful.ddd.services.AddressValidationService
 import com.lifeway.bootiful.ddd.services.ValidateAddressRequest
 import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway

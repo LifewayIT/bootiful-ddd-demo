@@ -46,6 +46,7 @@ class RedisResponseBroadcastService(
             .receive(ChannelTopic(BROADCAST_TOPIC))
             .map {
                 log.debug("Received broadcast message: ${it.message}")
+
                 val response = Try { Json.deserialize(it.message, MessageResponse::class) }
                 response.fold(
                     { e -> log.error("Error serializing response: ${e.message} ") },

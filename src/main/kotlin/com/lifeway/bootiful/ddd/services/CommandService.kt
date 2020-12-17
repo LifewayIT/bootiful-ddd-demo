@@ -38,7 +38,6 @@ interface CommandService {
 
 @Component
 class DefaultCommandService(private val kafkaTemplate: KafkaTemplate<String, String>): CommandService {
-
     private val responseRegistry: MutableMap<String, CompletableFuture<MessageResponse>> = mutableMapOf()
 
     override fun send(command: CommandWrapper): Mono<Unit> {
