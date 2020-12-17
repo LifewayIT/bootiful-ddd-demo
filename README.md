@@ -4,9 +4,9 @@ A Demo Application applying the principals of Domain Driven Design using the Spr
 
 ---
 ##TODO
-- [x] - Event sourced aggregate  
-- [x] - View Handlers and View Projections  
-- [x] - Query Handler  
-- [x] - Saga  
-- [ ] - Event Adapter  
-- [ ] - Redis Command Response Example  
+- [x] - Event sourced aggregate
+- [x] - View Handlers and View Projections
+- [x] - Query Handler
+- [x] - Saga
+- [x] - Event Adapter Example
+- [x] - Command Response using Redis

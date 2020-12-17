@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
 
 object Json {
     private val mapper = ObjectMapper().registerModule(KotlinModule())
-    fun serialize(any: Any): String = mapper.writeValueAsString(mapper)
+    fun serialize(any: Any): String = mapper.writeValueAsString(any)
     fun <T: Any> deserialize(json: String, klass: KClass<T>): T {
         return mapper.readValue(json, klass.java)
     }

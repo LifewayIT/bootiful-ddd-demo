@@ -10,15 +10,26 @@ plugins {
 group = "com.lifeway"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
+val artifactory_user = System.getenv("ARTIFACTORY_USER")
+val artifactory_password = System.getenv("ARTIFACTORY_PASSWORD")
 
 repositories {
 	mavenCentral()
+	maven {
+		setUrl("https://artifactory.prod.lifeway.com/artifactory/bsolutions-repo-group")
+		credentials {
+			username = artifactory_user
+			password = artifactory_password
+		}
+	}
 }
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
 	implementation("org.springframework.data:spring-data-mongodb")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("org.springframework.kafka:spring-kafka")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
@@ -34,7 +45,6 @@ dependencies {
 	implementation("org.axonframework.extensions.kotlin:axon-kotlin:0.1.0")
 
 	implementation("org.reflections:reflections:0.9.11")
-
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 }

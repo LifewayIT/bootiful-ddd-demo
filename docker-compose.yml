@@ -5,3 +5,27 @@ services:
     ports:
       - 27017:27017
     network_mode: "bridge"
+  redis:
+    image: 'bitnami/redis:latest'
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    network_mode: "bridge"
+  kafka:
+    image: lifeway/kafka:0.10.1.0
+    hostname: kafka
+    environment:
+      ADVERTISED_HOST: kafka
+      ADVERTISED_PORT: 9092
+      AUTO_CREATE_TOPICS: "true"
+    ports:
+      - "9092:9092"
+      - "2181:2181"
+    network_mode: "bridge"
+    command: >
+      bash -c
+      "(sleep 5s
+      && /opt/kafka_2.11-0.10.1.0/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 3 --topic events
+      && /opt/kafka_2.11-0.10.1.0/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 3 --topic commands
+      &) && (supervisord -n)"

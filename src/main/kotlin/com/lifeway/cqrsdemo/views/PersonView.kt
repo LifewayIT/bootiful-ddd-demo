@@ -4,6 +4,7 @@ import com.lifeway.cqrsdemo.domain.NameChanged
 import com.lifeway.cqrsdemo.domain.Person
 import com.lifeway.cqrsdemo.domain.PersonCreated
 import org.axonframework.commandhandling.GenericCommandMessage
+import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.EventHandler
 import org.axonframework.eventhandling.GenericEventMessage
 import org.axonframework.messaging.Message
@@ -18,6 +19,7 @@ class PersonView(val id: String, val firstName: String?, val lastName: String?)
 @Repository
 interface PersonViewRepo: MongoRepository<PersonView, String>
 
+@ProcessingGroup("ProfileView")
 @Component
 class PersonViewHandler(private val personViewRepo: PersonViewRepo) {
 

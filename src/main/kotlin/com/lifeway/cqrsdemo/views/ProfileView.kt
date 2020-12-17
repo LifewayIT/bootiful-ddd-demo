@@ -3,6 +3,7 @@ package com.lifeway.cqrsdemo.views
 import com.lifeway.cqrsdemo.domain.AddressValidated
 import com.lifeway.cqrsdemo.domain.NameChanged
 import com.lifeway.cqrsdemo.domain.PersonCreated
+import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.EventHandler
 import org.axonframework.eventhandling.GenericEventMessage
 import org.axonframework.messaging.Message
@@ -12,7 +13,6 @@ import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
 
-
 data class Address(val addressId: String, val line1: String, val line2: String? = null)
 data class Person(val firstName: String?, val lastName: String?)
 data class ProfileView(val id: String, val person: Person, val addresses: List<Address> = listOf())
@@ -20,6 +20,7 @@ data class ProfileView(val id: String, val person: Person, val addresses: List<A
 @Repository
 interface ProfileViewRepo: MongoRepository<ProfileView, String>
 
+@ProcessingGroup("ProfileView")
 @Component
 class ProfileViewHandler(private val profileViewRepo: ProfileViewRepo) {
 

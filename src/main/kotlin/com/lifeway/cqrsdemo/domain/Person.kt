@@ -1,9 +1,17 @@
 package com.lifeway.cqrsdemo.domain
 
+import com.lifeway.cqrsdemo.services.MessageResponse
+import com.lifeway.cqrsdemo.views.PersonViewHandler
 import org.axonframework.commandhandling.CommandHandler
+import org.axonframework.commandhandling.GenericCommandMessage
+import org.axonframework.eventhandling.GenericEventMessage
 import org.axonframework.eventsourcing.EventSourcingHandler
+import org.axonframework.messaging.Message
+import org.axonframework.messaging.interceptors.MessageHandlerInterceptor
 import org.axonframework.modelling.command.AggregateIdentifier
+import org.axonframework.modelling.command.AggregateLifecycle
 import org.axonframework.modelling.command.AggregateLifecycle.apply
+import org.axonframework.modelling.command.CommandHandlerInterceptor
 import org.axonframework.spring.stereotype.Aggregate
 import org.slf4j.LoggerFactory
 import java.util.*
@@ -26,6 +34,11 @@ class Person {
     private var phoneNumber: String? = null
     private var emails: List<Email> = listOf()
     private var addresses: List<Address> = listOf()
+
+    @CommandHandlerInterceptor
+    fun intercept(message: GenericCommandMessage<*>) {
+        log.debug("Handling command for Person Aggregate - ${message.commandName}")
+    }
 
     constructor()
 
@@ -68,22 +81,17 @@ class Person {
     }
 
     @CommandHandler
-    fun handle(command: AddAddress) {
+    fun handle(command: AddAddress): MessageResponse {
         val addressId = UUID.randomUUID().toString().toLowerCase()
-        apply(
-            command.let {
-                AddressAdded(
-                    it.personId,
-                    addressId,
-                    Address(
-                        addressId,
-                        it.line1,
-                        it.line2,
-                        ValidationStatus.PENDING
-                    )
-                )
-            }
+        val address = Address(
+            addressId,
+            command.line1,
+            command.line2,
+            ValidationStatus.PENDING
         )
+        val event = AddressAdded(command.personId, addressId, address)
+        apply(event)
+        return MessageResponse(result = address, message = "Address was successfully created!")
     }
 
     @CommandHandler

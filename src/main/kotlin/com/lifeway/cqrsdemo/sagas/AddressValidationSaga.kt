@@ -3,21 +3,13 @@ package com.lifeway.cqrsdemo.sagas
 import com.lifeway.cqrsdemo.domain.*
 import com.lifeway.cqrsdemo.services.AddressValidationService
 import com.lifeway.cqrsdemo.services.ValidateAddressRequest
-import com.lifeway.cqrsdemo.views.PersonViewHandler
-import org.axonframework.commandhandling.gateway.CommandGateway
-import org.axonframework.eventhandling.GenericEventMessage
+import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway
 import org.axonframework.modelling.saga.SagaEventHandler
 import org.axonframework.modelling.saga.SagaLifecycle
 import org.axonframework.modelling.saga.StartSaga
 import org.axonframework.spring.stereotype.Saga
-import reactor.core.publisher.Mono
-
-import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway
-import org.axonframework.messaging.Message
-import org.axonframework.messaging.interceptors.MessageHandlerInterceptor
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-
 
 @Saga
 class AddressValidationSaga {
@@ -51,12 +43,12 @@ class AddressValidationSaga {
     @SagaEventHandler(associationProperty = "addressId")
     fun handle(event: AddressValidated) {
         status = event.address.validationStatus
-//        SagaLifecycle.end()
+        SagaLifecycle.end()
     }
 
     @SagaEventHandler(associationProperty = "addressId")
     fun handle(event: AddressInvalidated) {
         status = event.address.validationStatus
-//        SagaLifecycle.end()
+        SagaLifecycle.end()
     }
 }
