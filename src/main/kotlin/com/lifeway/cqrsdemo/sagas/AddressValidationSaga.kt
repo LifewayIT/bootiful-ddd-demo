@@ -1,6 +1,6 @@
 package com.lifeway.cqrsdemo.sagas
 
-import com.lifeway.cqrsdemo.domain.*
+import com.lifeway.cqrsdemo.aggregate.*
 import com.lifeway.cqrsdemo.services.AddressValidationService
 import com.lifeway.cqrsdemo.services.ValidateAddressRequest
 import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway

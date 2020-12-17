@@ -1,7 +1,5 @@
 package com.lifeway.cqrsdemo.config
 
-import com.lifeway.cqrsdemo.domain.AddAddress
-import com.lifeway.cqrsdemo.services.CommandService
 import com.lifeway.cqrsdemo.services.CommandWrapper
 import com.lifeway.cqrsdemo.services.MessageResponse
 import com.lifeway.cqrsdemo.services.ResponseBroadcastService
@@ -9,14 +7,10 @@ import com.lifeway.cqrsdemo.utils.Json
 import com.lifeway.cqrsdemo.utils.Try
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.ProducerConfig
-import org.apache.kafka.common.serialization.Serdes
-import org.apache.kafka.common.serialization.Serializer
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
 import org.axonframework.commandhandling.callbacks.LoggingCallback
 import org.axonframework.commandhandling.gateway.CommandGateway
-import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway
-import org.axonframework.modelling.command.AggregateNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties

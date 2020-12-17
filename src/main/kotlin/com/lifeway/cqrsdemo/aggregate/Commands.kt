@@ -1,4 +1,4 @@
-package com.lifeway.cqrsdemo.domain
+package com.lifeway.cqrsdemo.aggregate
 
 import org.axonframework.modelling.command.TargetAggregateIdentifier
 

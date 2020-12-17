@@ -3,7 +3,6 @@ package com.lifeway.cqrsdemo.utils
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.lifeway.cqrsdemo.domain.Address
 import kotlin.reflect.KClass
 
 

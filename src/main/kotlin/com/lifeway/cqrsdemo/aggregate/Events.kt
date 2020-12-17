@@ -1,4 +1,4 @@
-package com.lifeway.cqrsdemo.domain
+package com.lifeway.cqrsdemo.aggregate
 
 data class PersonCreated(val id: String, val firstName: String, val lastName: String, val phoneNumber: String?)
 data class NameChanged(val personId: String, val firstName: String?, val lastName: String?)

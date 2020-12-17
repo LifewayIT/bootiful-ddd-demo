@@ -1,6 +1,5 @@
 package com.lifeway.cqrsdemo.services
 
-import com.lifeway.cqrsdemo.domain.AddAddress
 import com.lifeway.cqrsdemo.utils.Json
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component

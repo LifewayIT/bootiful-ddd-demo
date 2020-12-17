@@ -1,15 +1,10 @@
-package com.lifeway.cqrsdemo.domain
+package com.lifeway.cqrsdemo.aggregate
 
 import com.lifeway.cqrsdemo.services.MessageResponse
-import com.lifeway.cqrsdemo.views.PersonViewHandler
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.commandhandling.GenericCommandMessage
-import org.axonframework.eventhandling.GenericEventMessage
 import org.axonframework.eventsourcing.EventSourcingHandler
-import org.axonframework.messaging.Message
-import org.axonframework.messaging.interceptors.MessageHandlerInterceptor
 import org.axonframework.modelling.command.AggregateIdentifier
-import org.axonframework.modelling.command.AggregateLifecycle
 import org.axonframework.modelling.command.AggregateLifecycle.apply
 import org.axonframework.modelling.command.CommandHandlerInterceptor
 import org.axonframework.spring.stereotype.Aggregate

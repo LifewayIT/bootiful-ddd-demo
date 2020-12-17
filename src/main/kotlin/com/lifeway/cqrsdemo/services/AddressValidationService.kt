@@ -1,7 +1,7 @@
 package com.lifeway.cqrsdemo.services
 
-import com.lifeway.cqrsdemo.domain.Address
-import com.lifeway.cqrsdemo.domain.ValidationStatus.VALID
+import com.lifeway.cqrsdemo.aggregate.Address
+import com.lifeway.cqrsdemo.aggregate.ValidationStatus.VALID
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 

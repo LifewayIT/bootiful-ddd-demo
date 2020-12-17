@@ -1,25 +1,15 @@
 package com.lifeway.cqrsdemo.services
 
-import com.lifeway.cqrsdemo.domain.AddressValidated
-import com.lifeway.cqrsdemo.domain.NameChanged
-import com.lifeway.cqrsdemo.domain.PersonCreated
 import com.lifeway.cqrsdemo.utils.Json
-import com.lifeway.cqrsdemo.views.Address
-import com.lifeway.cqrsdemo.views.Person
-import com.lifeway.cqrsdemo.views.ProfileView
-import com.lifeway.cqrsdemo.views.ProfileViewHandler
 import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.DomainEventMessage
 import org.axonframework.eventhandling.EventHandler
 import org.axonframework.eventhandling.GenericEventMessage
-import org.axonframework.eventhandling.Timestamp
 import org.axonframework.messaging.Message
 import org.axonframework.messaging.interceptors.MessageHandlerInterceptor
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.core.KafkaTemplate
-import org.springframework.kafka.support.SendResult
 import org.springframework.stereotype.Component
-import reactor.core.publisher.Mono
 import java.util.*
 import java.util.concurrent.CompletableFuture
 

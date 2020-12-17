@@ -1,15 +1,11 @@
 package com.lifeway.cqrsdemo.controllers
 
-import com.lifeway.cqrsdemo.domain.AddAddress
-import com.lifeway.cqrsdemo.domain.CreatePerson
-import com.lifeway.cqrsdemo.domain.Email
-import com.lifeway.cqrsdemo.domain.Person
+import com.lifeway.cqrsdemo.aggregate.AddAddress
+import com.lifeway.cqrsdemo.aggregate.CreatePerson
 import com.lifeway.cqrsdemo.services.CommandService
 import com.lifeway.cqrsdemo.services.CommandWrapper
-import com.lifeway.cqrsdemo.utils.Json
 import com.lifeway.cqrsdemo.views.PersonViewRepo
 import com.lifeway.cqrsdemo.views.ProfileViewRepo
-import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
