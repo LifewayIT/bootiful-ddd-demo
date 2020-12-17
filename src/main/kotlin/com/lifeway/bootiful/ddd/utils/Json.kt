@@ -1,4 +1,4 @@
-package com.lifeway.cqrsdemo.utils
+package com.lifeway.bootiful.ddd.utils
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper

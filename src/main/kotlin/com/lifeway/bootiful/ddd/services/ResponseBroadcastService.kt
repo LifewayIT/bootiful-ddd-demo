@@ -1,7 +1,7 @@
-package com.lifeway.cqrsdemo.services
+package com.lifeway.bootiful.ddd.services
 
-import com.lifeway.cqrsdemo.utils.Json
-import com.lifeway.cqrsdemo.utils.Try
+import com.lifeway.bootiful.ddd.utils.Json
+import com.lifeway.bootiful.ddd.utils.Try
 import org.reactivestreams.Publisher
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
@@ -32,9 +32,9 @@ class RedisConfiguration {
 
 @Component
 class RedisResponseBroadcastService(
-    private val reactiveRedisTemplate: ReactiveRedisTemplate<String, String>,
-    private val reactiveRedisMessageListenerContainer: ReactiveRedisMessageListenerContainer,
-    private val commandService: CommandService,
+        private val reactiveRedisTemplate: ReactiveRedisTemplate<String, String>,
+        private val reactiveRedisMessageListenerContainer: ReactiveRedisMessageListenerContainer,
+        private val commandService: CommandService,
 ): ResponseBroadcastService {
 
     companion object {

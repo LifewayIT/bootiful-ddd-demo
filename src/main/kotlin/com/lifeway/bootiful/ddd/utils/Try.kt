@@ -1,4 +1,4 @@
-package com.lifeway.cqrsdemo.utils
+package com.lifeway.bootiful.ddd.utils
 
 sealed class Try<T> {
 
@@ -36,7 +36,7 @@ sealed class Try<T> {
 
     abstract fun getOrElse(default:  T): T
 
-    abstract fun orElse(default: Try< T>): Try<T>
+    abstract fun orElse(default: Try<T>): Try<T>
 
     abstract fun <U> fold(fa: (Throwable) -> U, fb: (T) -> U): U
 

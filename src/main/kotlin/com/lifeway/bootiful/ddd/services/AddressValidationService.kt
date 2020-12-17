@@ -1,7 +1,7 @@
-package com.lifeway.cqrsdemo.services
+package com.lifeway.bootiful.ddd.services
 
-import com.lifeway.cqrsdemo.aggregate.Address
-import com.lifeway.cqrsdemo.aggregate.ValidationStatus.VALID
+import com.lifeway.bootiful.ddd.aggregate.Address
+import com.lifeway.bootiful.ddd.aggregate.ValidationStatus.VALID
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 

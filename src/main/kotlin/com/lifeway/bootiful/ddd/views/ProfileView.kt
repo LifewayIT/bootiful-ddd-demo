@@ -1,8 +1,8 @@
-package com.lifeway.cqrsdemo.views
+package com.lifeway.bootiful.ddd.views
 
-import com.lifeway.cqrsdemo.aggregate.AddressValidated
-import com.lifeway.cqrsdemo.aggregate.NameChanged
-import com.lifeway.cqrsdemo.aggregate.PersonCreated
+import com.lifeway.bootiful.ddd.aggregate.AddressValidated
+import com.lifeway.bootiful.ddd.aggregate.NameChanged
+import com.lifeway.bootiful.ddd.aggregate.PersonCreated
 import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.EventHandler
 import org.axonframework.eventhandling.GenericEventMessage
@@ -44,8 +44,8 @@ class ProfileViewHandler(private val profileViewRepo: ProfileViewRepo) {
     protected fun on(event: NameChanged) {
         profileViewRepo.findById(event.personId).ifPresent {
             val person = Person(
-                event.firstName ?: it.person.firstName,
-                event.lastName ?: it.person.lastName
+                    event.firstName ?: it.person.firstName,
+                    event.lastName ?: it.person.lastName
             )
             profileViewRepo.save(it.copy(person = person))
         }
@@ -56,7 +56,7 @@ class ProfileViewHandler(private val profileViewRepo: ProfileViewRepo) {
         profileViewRepo.findById(event.personId).ifPresent {
             val addresses = listOf(
                 *it.addresses.toTypedArray(),
-                Address(event.address.addressId, event.address.line1, event.address.line2)
+                    Address(event.address.addressId, event.address.line1, event.address.line2)
             )
             profileViewRepo.save(it.copy(addresses = addresses))
         }

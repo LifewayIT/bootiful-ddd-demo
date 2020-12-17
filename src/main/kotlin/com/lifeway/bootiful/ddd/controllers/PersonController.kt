@@ -1,11 +1,11 @@
-package com.lifeway.cqrsdemo.controllers
+package com.lifeway.bootiful.ddd.controllers
 
-import com.lifeway.cqrsdemo.aggregate.AddAddress
-import com.lifeway.cqrsdemo.aggregate.CreatePerson
-import com.lifeway.cqrsdemo.services.CommandService
-import com.lifeway.cqrsdemo.services.CommandWrapper
-import com.lifeway.cqrsdemo.views.PersonViewRepo
-import com.lifeway.cqrsdemo.views.ProfileViewRepo
+import com.lifeway.bootiful.ddd.aggregate.AddAddress
+import com.lifeway.bootiful.ddd.aggregate.CreatePerson
+import com.lifeway.bootiful.ddd.services.CommandService
+import com.lifeway.bootiful.ddd.services.CommandWrapper
+import com.lifeway.bootiful.ddd.views.PersonViewRepo
+import com.lifeway.bootiful.ddd.views.ProfileViewRepo
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
@@ -35,9 +35,9 @@ class PersonRouter(private val personHandler: PersonHandler) {
 
 @Component
 class PersonHandler(
-    private val commandService: CommandService,
-    private val personViewRepo: PersonViewRepo,
-    private val profileViewRepo: ProfileViewRepo,
+        private val commandService: CommandService,
+        private val personViewRepo: PersonViewRepo,
+        private val profileViewRepo: ProfileViewRepo,
 ) {
     fun createPerson(request: ServerRequest): Mono<ServerResponse> {
         return request
@@ -75,7 +75,7 @@ class PersonHandler(
             .flatMap {
                 commandService.sendForResponse(CommandWrapper.from(
                     personId,
-                    AddAddress(personId, it.line1, it.line2)
+                        AddAddress(personId, it.line1, it.line2)
                 ))
             }
             .flatMap { ServerResponse.ok().bodyValue(it) }

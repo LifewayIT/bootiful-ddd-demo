@@ -1,6 +1,6 @@
-package com.lifeway.cqrsdemo.services
+package com.lifeway.bootiful.ddd.services
 
-import com.lifeway.cqrsdemo.utils.Json
+import com.lifeway.bootiful.ddd.utils.Json
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
@@ -16,9 +16,9 @@ data class CommandWrapper (
 ) {
     companion object {
         fun <T: Any> from(key: String, t:T): CommandWrapper = CommandWrapper(
-            payload = Json.serialize(t),
-            commandType = t::class.java.simpleName,
-            shardKey = key
+                payload = Json.serialize(t),
+                commandType = t::class.java.simpleName,
+                shardKey = key
         )
     }
 }

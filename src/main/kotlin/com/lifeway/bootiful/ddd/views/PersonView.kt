@@ -1,7 +1,7 @@
-package com.lifeway.cqrsdemo.views
+package com.lifeway.bootiful.ddd.views
 
-import com.lifeway.cqrsdemo.aggregate.NameChanged
-import com.lifeway.cqrsdemo.aggregate.PersonCreated
+import com.lifeway.bootiful.ddd.aggregate.NameChanged
+import com.lifeway.bootiful.ddd.aggregate.PersonCreated
 import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.EventHandler
 import org.axonframework.eventhandling.GenericEventMessage
@@ -41,9 +41,9 @@ class PersonViewHandler(private val personViewRepo: PersonViewRepo) {
     protected fun on(event: NameChanged) {
         personViewRepo.findById(event.personId).ifPresent {
             personViewRepo.save(PersonView(
-                it.id,
-                event.firstName ?: it.firstName,
-                event.lastName ?: it.lastName
+                    it.id,
+                    event.firstName ?: it.firstName,
+                    event.lastName ?: it.lastName
             ))
         }
     }

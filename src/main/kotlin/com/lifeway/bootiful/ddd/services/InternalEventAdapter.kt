@@ -1,6 +1,6 @@
-package com.lifeway.cqrsdemo.services
+package com.lifeway.bootiful.ddd.services
 
-import com.lifeway.cqrsdemo.utils.Json
+import com.lifeway.bootiful.ddd.utils.Json
 import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.DomainEventMessage
 import org.axonframework.eventhandling.EventHandler
@@ -37,7 +37,7 @@ class InternalEventAdapter(private val kafkaTemplate: KafkaTemplate<String, Stri
 
     @EventHandler
     protected fun on(event: DomainEventMessage<*>): CompletableFuture<Void> {
-        val enterpriseEvent = event.let { EnterpriseEvent(it.identifier, it.payload::class.java.simpleName, it.aggregateIdentifier, it.payload ) }
+        val enterpriseEvent = event.let { EnterpriseEvent(it.identifier, it.payload::class.java.simpleName, it.aggregateIdentifier, it.payload) }
         return publish(enterpriseEvent)
     }
 }

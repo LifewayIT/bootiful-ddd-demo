@@ -1,6 +1,6 @@
-package com.lifeway.cqrsdemo.aggregate
+package com.lifeway.bootiful.ddd.aggregate
 
-import com.lifeway.cqrsdemo.services.MessageResponse
+import com.lifeway.bootiful.ddd.services.MessageResponse
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.commandhandling.GenericCommandMessage
 import org.axonframework.eventsourcing.EventSourcingHandler
@@ -79,10 +79,10 @@ class Person {
     fun handle(command: AddAddress): MessageResponse {
         val addressId = UUID.randomUUID().toString().toLowerCase()
         val address = Address(
-            addressId,
-            command.line1,
-            command.line2,
-            ValidationStatus.PENDING
+                addressId,
+                command.line1,
+                command.line2,
+                ValidationStatus.PENDING
         )
         val event = AddressAdded(command.personId, addressId, address)
         apply(event)
@@ -92,22 +92,22 @@ class Person {
     @CommandHandler
     fun handle(command: ConfirmAddress) {
         apply(
-            AddressValidated(
-                command.personId,
-                command.address.addressId,
-                command.address
-            )
+                AddressValidated(
+                        command.personId,
+                        command.address.addressId,
+                        command.address
+                )
         )
     }
 
     @CommandHandler
     fun handle(command: InvalidateAddress) {
         apply(
-            AddressInvalidated(
-                command.personId,
-                command.address.addressId,
-                command.address
-            )
+                AddressInvalidated(
+                        command.personId,
+                        command.address.addressId,
+                        command.address
+                )
         )
     }
 

@@ -1,4 +1,4 @@
-package com.lifeway.cqrsdemo.aggregate
+package com.lifeway.bootiful.ddd.aggregate
 
 import org.axonframework.modelling.command.TargetAggregateIdentifier
 

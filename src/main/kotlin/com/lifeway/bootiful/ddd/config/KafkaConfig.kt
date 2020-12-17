@@ -1,10 +1,10 @@
-package com.lifeway.cqrsdemo.config
+package com.lifeway.bootiful.ddd.config
 
-import com.lifeway.cqrsdemo.services.CommandWrapper
-import com.lifeway.cqrsdemo.services.MessageResponse
-import com.lifeway.cqrsdemo.services.ResponseBroadcastService
-import com.lifeway.cqrsdemo.utils.Json
-import com.lifeway.cqrsdemo.utils.Try
+import com.lifeway.bootiful.ddd.services.CommandWrapper
+import com.lifeway.bootiful.ddd.services.MessageResponse
+import com.lifeway.bootiful.ddd.services.ResponseBroadcastService
+import com.lifeway.bootiful.ddd.utils.Json
+import com.lifeway.bootiful.ddd.utils.Try
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
