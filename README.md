@@ -1,23 +1,23 @@
 # bootiful-ddd-demo
 A Demo Application applying the principals of Domain Driven Design using the Springboot ecosystem, Reactor Core, and Axon Framework.
 
-![High Level Architecture](https://github.com/LifewayIT/bootiful-ddd-demo/blob/master/component_high_level.png?raw=true)
+![High Level Architecture](https://github.com/LifewayIT/bootiful-ddd-demo/blob/master/architecture/component_high_level.png?raw=true)
 
 An explanation of each of the components pictured is as follows:
 
-    Aggregate Root - the encapsulation of business processes and events that, in sequence, “aggregate” into a state of the domain model. “Commands” can be sent to the aggregate that are validated and translated into a sequence of “Events” according to the business logic of the domain. All state consistency, ordering of events, and commands are handled by the AR.
+`Aggregate Root` - the encapsulation of business processes and events that, in sequence, “aggregate” into a state of the domain model. “Commands” can be sent to the aggregate that are validated and translated into a sequence of “Events” according to the business logic of the domain. All state consistency, ordering of events, and commands are handled by the AR.
 
-    Event Store - used by the Aggregate Root to persist new events in order and fetch events that have previously been dispatched. This is the central and critical “data layer” for a CQRS/ES implementation.
+`Event Store` - used by the Aggregate Root to persist new events in order and fetch events that have previously been dispatched. This is the central and critical “data layer” for a CQRS/ES implementation.
 
-    Saga - a downstream consumer of domain events that is responsible for some asynchronous business process that maintains its own state. These processes should consume an event, change its own state, potentially perform a side effect based on this state, and emit commands back to the Aggregate Root depending on the results of all of these actions. It can be viewed as a Finite State Machine (FSM) encapsulating a business process.
+`Saga` - a downstream consumer of domain events that is responsible for some asynchronous business process that maintains its own state. These processes should consume an event, change its own state, potentially perform a side effect based on this state, and emit commands back to the Aggregate Root depending on the results of all of these actions. It can be viewed as a Finite State Machine (FSM) encapsulating a business process.
 
-    View Handlers - a downstream consumer of domain events that updates various repositories used for read operations by clients. These processes should be repeatable, pure functions that will always result in the same state for a given VIew Projection (VP).
+`View Handlers` - a downstream consumer of domain events that updates various repositories used for read operations by clients. These processes should be repeatable, pure functions that will always result in the same state for a given VIew Projection (VP).
 
-    View Projections - a data layer built to optimize the “read” side of the domain. Should be easily rebuildable by events from the Aggregate Root via the View Handlers.
+`View Projections` - a data layer built to optimize the “read” side of the domain. Should be easily rebuildable by events from the Aggregate Root via the View Handlers.
 
-    Query Handler - a series of HTTP controllers (REST, gQL, etc) that can query a model held within View Projections of the domain.
+`Query Handler` - a series of HTTP controllers (REST, gQL, etc) that can query a model held within View Projections of the domain.
 
-    External Event Adapter - consumer of events from external systems/domains that either adapts them into commands for an Aggregate Root or state updates for a view projection dependent on external data. (Note: any external data needs to be consistently established as a part of the view handler. If that is not maintained by the view handlers, there is significant risk in not being able to rebuild views on demand.) Additionally, this component is responsible for adapting domain events for external consumption in the enterprise.
+`External Event Adapter` - consumer of events from external systems/domains that either adapts them into commands for an Aggregate Root or state updates for a view projection dependent on external data. (Note: any external data needs to be consistently established as a part of the view handler. If that is not maintained by the view handlers, there is significant risk in not being able to rebuild views on demand.) Additionally, this component is responsible for adapting domain events for external consumption in the enterprise.
 
 
 ---
