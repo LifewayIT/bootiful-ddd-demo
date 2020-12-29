@@ -24,29 +24,44 @@ repositories {
 	}
 }
 
+
+val springDependencies = listOf(
+	"org.springframework.boot:spring-boot-starter-data-mongodb",
+	"org.springframework.boot:spring-boot-starter-data-redis-reactive",
+	"org.springframework.data:spring-data-mongodb",
+	"org.springframework.boot:spring-boot-starter-webflux",
+	"org.springframework.kafka:spring-kafka"
+)
+
+val kotlinDependencies = listOf(
+	"com.fasterxml.jackson.module:jackson-module-kotlin",
+	"io.projectreactor.kotlin:reactor-kotlin-extensions",
+	"org.jetbrains.kotlin:kotlin-reflect",
+	"org.jetbrains.kotlinx:kotlinx-coroutines-reactor"
+)
+
+val axonDependencies = listOf(
+	"org.axonframework:axon-spring-boot-starter:4.4",
+	"org.axonframework.extensions.mongo:axon-mongo:4.4",
+	"org.axonframework.extensions.reactor:axon-reactor-spring-boot-starter:4.4.2",
+	"org.axonframework.extensions.reactor:axon-reactor-spring-boot-starter:4.4.2",
+	"org.axonframework.extensions.kotlin:axon-kotlin:0.1.0"
+)
+
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-	implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
-	implementation("org.springframework.data:spring-data-mongodb")
-	implementation("org.springframework.boot:spring-boot-starter-webflux")
-	implementation("org.springframework.kafka:spring-kafka")
 
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-//	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-
-	implementation("org.axonframework:axon-spring-boot-starter:4.4") {
-		exclude("org.axonframework","axon-server-connector")
+	springDependencies.forEach { implementation(it) }
+	kotlinDependencies.forEach { implementation(it) }
+	axonDependencies.forEach {
+		implementation(it) { exclude("org.axonframework","axon-server-connector") }
 	}
-	implementation("org.axonframework.extensions.mongo:axon-mongo:4.4")
-	implementation("org.axonframework.extensions.reactor:axon-reactor-spring-boot-starter:4.4.2")
-	implementation("org.axonframework.extensions.kotlin:axon-kotlin:0.1.0")
 
 	implementation("org.reflections:reflections:0.9.11")
+	testImplementation("junit:junit:4.12")
+	testImplementation("org.axonframework:axon-test:4.4.5")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+	testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.4.21")
 }
 
 tasks.withType<KotlinCompile> {
