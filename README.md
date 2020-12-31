@@ -7,11 +7,12 @@ You will need:
 
 ```
 Docker 18+
+Docker Compose (typically bundled with docker for mac)
 Java 11
 Gradle
 ```
 
-#### **Step 1** - Stand up your deps. 
+#### **Step 1** - Stand up your deps.
 
 `docker-compose up --build`
 
@@ -21,7 +22,7 @@ This command stands up mongo, redis, and kafka. If you want to run them headless
 
 `gradlew bootJar`
 
-This gradle command builds an executable jar and places it in the `./build/libs/` directory for you. 
+This gradle command builds an executable jar and places it in the `./build/libs/` directory for you.
 
 
 #### **Step 3** - Run jar with server your desired server options.
