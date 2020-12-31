@@ -24,7 +24,7 @@ This command stands up mongo, redis, and kafka. If you want to run them headless
 This gradle command builds an executable jar and places it in the `./build/libs/` directory for you. 
 
 
-### **Step 3** - Run jar with server your desired server options.
+#### **Step 3** - Run jar with server your desired server options.
 
 `java -jar ./build/libs/bootiful-ddd-0.0.1-SNAPSHOT.jar --server.port=8080 --spring.profiles.active=local`
 
