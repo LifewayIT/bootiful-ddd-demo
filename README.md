@@ -1,12 +1,39 @@
 # bootiful-ddd-demo
-A Demo Application applying the principals of Domain Driven Design using the Springboot ecosystem, Reactor Core, and Axon Framework.
+A Demo Application applying the principals of Domain Driven Design using the Springboot ecosystem, Reactor Core, and Axon Framework (CQRS/ES).
 ---
-## Running locally...
+### Running locally... 🏃
+
+You will need:
+
+```
+Docker 18+
+Java 11
+Gradle
+```
+
+**Step 1** - Stand up your deps. 
+
+`docker-compose up --build`
+
+This command stands up mongo, redis, and kafka. If you want to run them headlessly simply use the `-d` flag.
+
+**Step 2** - Build jar from source.
+
+`gradlew bootJar`
+
+This gradle command builds an executable jar and places it in the `./build/libs/` directory for you. 
 
 
+**Step 3** - Run jar with server your desired server options.
 
+`java -jar ./build/libs/bootiful-ddd-0.0.1-SNAPSHOT.jar --server.port=8080 --spring.profiles.active=local`
+
+
+*Alternatively, you can replace steps 2 and 3 with the springboot runner in IntelliJ if you have it.*
 
 ---
+### Docs 🗞
+
 ![High Level Architecture](https://github.com/LifewayIT/bootiful-ddd-demo/blob/master/architecture/component_high_level.png?raw=true)
 
 An explanation of each of the components pictured is as follows:
@@ -27,7 +54,7 @@ An explanation of each of the components pictured is as follows:
 
 
 ---
-##TODO
+### TODO
 - [x] - Event sourced aggregate
 - [x] - View Handlers and View Projections
 - [x] - Query Handler
