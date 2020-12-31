@@ -1,31 +1,52 @@
 version: '2'
 services:
   mongo:
+    container_name: mongo
     image: mongo:4.0
     ports:
       - 27017:27017
-    network_mode: "bridge"
   redis:
     image: 'bitnami/redis:latest'
+    container_name: redis
     ports:
       - 6379:6379
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-    network_mode: "bridge"
-  kafka:
-    image: lifeway/kafka:0.10.1.0
-    hostname: kafka
-    environment:
-      ADVERTISED_HOST: kafka
-      ADVERTISED_PORT: 9092
-      AUTO_CREATE_TOPICS: "true"
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.0.0
+    container_name: zookeeper
     ports:
-      - "9092:9092"
       - "2181:2181"
-    network_mode: "bridge"
-    command: >
-      bash -c
-      "(sleep 5s
-      && /opt/kafka_2.11-0.10.1.0/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 3 --topic events
-      && /opt/kafka_2.11-0.10.1.0/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 3 --topic commands
-      &) && (supervisord -n)"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+  kafka:
+    image: confluentinc/cp-kafka:5.0.0
+    container_name: kafka
+    ports:
+      - "9094:9094"
+      - "9093:9093"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,PUBLIC://docker.remote:9094,LOCAL://localhost:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,PUBLIC:PLAINTEXT,LOCAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+  # This "container" is a workaround to pre-create topics
+  kafka-setup:
+    image: confluentinc/cp-kafka:5.0.0
+    hostname: kafka-setup
+    container_name: kafka-setup
+    depends_on:
+      - kafka
+    command: "bash -c 'echo Waiting for Kafka to be ready... && \
+                       cub kafka-ready -b kafka:9092 1 20 && \
+                       kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 3 --replication-factor 1 --topic events && \
+                       kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 3 --replication-factor 1 --topic commands && \
+                       kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 3 --replication-factor 1 --topic __consumer_offsets && \
+                       /tmp/dashboard/docker-combined.sh'"
+    environment:
+      # The following settings are listed here only to satisfy the image's requirements.
+      # We override the image's `command` anyways, hence this container will not start a broker.
+      KAFKA_BROKER_ID: ignored
+      KAFKA_ZOOKEEPER_CONNECT: ignored

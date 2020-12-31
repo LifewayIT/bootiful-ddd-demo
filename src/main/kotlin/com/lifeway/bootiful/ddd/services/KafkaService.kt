@@ -1,4 +1,5 @@
-package com.lifeway.bootiful.ddd.config
+package com.lifeway.bootiful.ddd.services
+
 
 import com.lifeway.bootiful.ddd.services.CommandWrapper
 import com.lifeway.bootiful.ddd.services.MessageResponse
@@ -80,8 +81,8 @@ class KafkaConsumer(private val commandGateway: CommandGateway, private val broa
                     MessageResponse(commandId = wrapper.id)
             }
             val response = tryToSerialize.fold(
-                { MessageResponse(wrapper.id, it.message, "An error occurred when dispatching your command.") },
-                { it }
+                    { MessageResponse(wrapper.id, it.message, "An error occurred when dispatching your command.") },
+                    { it }
             )
             broadcastService.broadcastResponse(response)
         } else {

@@ -12,7 +12,7 @@ interface AddressValidationService {
 }
 
 @Component
-class AddressValidationServiceImpl() : AddressValidationService {
+class DefaultAddressValidationService() : AddressValidationService {
     override fun validate(req: ValidateAddressRequest): Mono<Address> {
         val address = Address(req.addressId, req.line1, req.line2, VALID)
         return Mono.just(address)

@@ -1,5 +1,6 @@
 package com.lifeway.bootiful.ddd.services
 
+import com.fasterxml.jackson.databind.JsonNode
 import com.lifeway.bootiful.ddd.utils.Json
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
@@ -9,14 +10,14 @@ import java.util.concurrent.CompletableFuture
 
 data class CommandWrapper (
     val id: String = UUID.randomUUID().toString().toLowerCase(),
-    val payload: String,
+    val payload: JsonNode,
     val commandType: String,
     val shardKey: String,
     val awaitingReply: Boolean = false,
 ) {
     companion object {
         fun <T: Any> from(key: String, t:T): CommandWrapper = CommandWrapper(
-                payload = Json.serialize(t),
+                payload = Json.createJsonNode(t),
                 commandType = t::class.java.simpleName,
                 shardKey = key
         )

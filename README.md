@@ -1,6 +1,12 @@
 # bootiful-ddd-demo
 A Demo Application applying the principals of Domain Driven Design using the Springboot ecosystem, Reactor Core, and Axon Framework.
+---
+## Running locally...
 
+
+
+
+---
 ![High Level Architecture](https://github.com/LifewayIT/bootiful-ddd-demo/blob/master/architecture/component_high_level.png?raw=true)
 
 An explanation of each of the components pictured is as follows:

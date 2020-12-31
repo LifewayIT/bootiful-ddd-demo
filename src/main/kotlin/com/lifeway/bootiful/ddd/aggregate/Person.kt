@@ -4,9 +4,8 @@ import com.lifeway.bootiful.ddd.services.MessageResponse
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.commandhandling.GenericCommandMessage
 import org.axonframework.eventsourcing.EventSourcingHandler
-import org.axonframework.modelling.command.AggregateIdentifier
+import org.axonframework.modelling.command.*
 import org.axonframework.modelling.command.AggregateLifecycle.apply
-import org.axonframework.modelling.command.CommandHandlerInterceptor
 import org.axonframework.spring.stereotype.Aggregate
 import org.slf4j.LoggerFactory
 import java.util.*
@@ -16,7 +15,7 @@ data class Email(val emailAddress: String, val isUsername: Boolean = false)
 data class Address(val addressId: String, val line1: String, val line2: String?, val validationStatus: ValidationStatus)
 
 @Aggregate
-class Person {
+class Person() {
 
     companion object {
         private val log = LoggerFactory.getLogger(Person::class.java)
@@ -35,11 +34,18 @@ class Person {
         log.debug("Handling command for Person Aggregate - ${message.commandName}")
     }
 
-    constructor()
-
     @CommandHandler
-    constructor(cmd: CreatePerson) {
+    @CreationPolicy(AggregateCreationPolicy.ALWAYS)
+    fun handle(cmd: CreatePerson): MessageResponse {
         apply(PersonCreated(cmd.id, cmd.firstName, cmd.lastName, cmd.phoneNumber))
+        val res = mapOf("name" to "${cmd.firstName} ${cmd.lastName}", "id" to cmd.id)
+        return MessageResponse(
+            message = "Created person successfully.",
+            result = mapOf(
+                "id" to cmd.id,
+                "name" to "${cmd.firstName} ${cmd.lastName}"
+            )
+        )
     }
 
     @EventSourcingHandler

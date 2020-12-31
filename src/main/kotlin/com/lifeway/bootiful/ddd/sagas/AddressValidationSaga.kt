@@ -4,8 +4,8 @@ import com.lifeway.bootiful.ddd.aggregate.*
 import com.lifeway.bootiful.ddd.services.AddressValidationService
 import com.lifeway.bootiful.ddd.services.ValidateAddressRequest
 import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway
+import org.axonframework.modelling.saga.EndSaga
 import org.axonframework.modelling.saga.SagaEventHandler
-import org.axonframework.modelling.saga.SagaLifecycle
 import org.axonframework.modelling.saga.StartSaga
 import org.axonframework.spring.stereotype.Saga
 import org.slf4j.LoggerFactory
@@ -40,15 +40,15 @@ class AddressValidationSaga {
             .subscribe()
     }
 
+    @EndSaga
     @SagaEventHandler(associationProperty = "addressId")
     fun handle(event: AddressValidated) {
         status = event.address.validationStatus
-        SagaLifecycle.end()
     }
 
+    @EndSaga
     @SagaEventHandler(associationProperty = "addressId")
     fun handle(event: AddressInvalidated) {
         status = event.address.validationStatus
-        SagaLifecycle.end()
     }
 }

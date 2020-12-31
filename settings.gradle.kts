@@ -1,1 +1,1 @@
-rootProject.name = "cqrs-demo"
+rootProject.name = "bootiful-ddd"
