@@ -1,6 +1,6 @@
 # bootiful-ddd-demo
 A Demo Application applying the principals of Domain Driven Design using the Springboot ecosystem, Reactor Core, and Axon Framework (CQRS/ES).
----
+
 ### Running locally... 🏃
 
 You will need:
