@@ -17,7 +17,7 @@ class PersonView(val id: String, val firstName: String?, val lastName: String?)
 @Repository
 interface PersonViewRepo: MongoRepository<PersonView, String>
 
-@ProcessingGroup("ProfileView")
+@ProcessingGroup("PersonView")
 @Component
 class PersonViewHandler(private val personViewRepo: PersonViewRepo) {
 

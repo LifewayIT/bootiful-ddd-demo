@@ -1,7 +1,10 @@
 package com.lifeway.bootiful.ddd
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.lifeway.bootiful.ddd.aggregate.Person
+import com.lifeway.bootiful.ddd.utils.KafkaMessageSource
 import com.mongodb.client.MongoClient
 import org.axonframework.config.EventProcessingConfigurer
 import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore
@@ -9,6 +12,7 @@ import org.axonframework.eventsourcing.eventstore.EventStorageEngine
 import org.axonframework.extensions.mongo.DefaultMongoTemplate
 import org.axonframework.extensions.mongo.eventhandling.saga.repository.MongoSagaStore
 import org.axonframework.extensions.mongo.eventsourcing.eventstore.MongoEventStorageEngine
+import org.axonframework.messaging.SubscribableMessageSource
 import org.axonframework.serialization.json.JacksonSerializer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -33,13 +37,13 @@ class Application {
 
 	@Bean
 	fun storageEngine(client: MongoClient?): EventStorageEngine? {
-		val mapper = ObjectMapper().registerModule(KotlinModule())
+		val mapper = ObjectMapper().registerModule(KotlinModule()).setSerializationInclusion(JsonInclude.Include.NON_NULL)
 		val ser = JacksonSerializer.builder().objectMapper(mapper).build()
 		return MongoEventStorageEngine.builder()
 			.mongoTemplate(
 				DefaultMongoTemplate.builder().mongoDatabase(client).build()
-			).
-			eventSerializer(ser)
+			)
+			.eventSerializer(ser)
 			.build()
 	}
 
@@ -51,23 +55,18 @@ class Application {
 	}
 
 	/**
-	 * TOKEN TRACKING PROCESSORS DO NOT SCALE WELL: https://docs.axoniq.io/reference-guide/v/4.0/configuring-infrastructure-components/event-processing/event-processors.
-	 * Essentially all processors would be managed by a single node, not properly distributing the traffic.
+	 * Use a kafka event topic to distribute saved domain events to downstream event processors. (i.e. view handlers and sagas).
  	 */
 	@Autowired
-	fun configure(config: EventProcessingConfigurer) {
+	fun configure(config: EventProcessingConfigurer, kafkaMessageSource: KafkaMessageSource, eventStore: EmbeddedEventStore) {
 		config.usingSubscribingEventProcessors()
+		config.registerSubscribingEventProcessor("InternalEventAdapter") {
+			eventStore
+		}
+		config.configureDefaultSubscribableMessageSource {
+			kafkaMessageSource
+		}
 	}
-
-// NO NEED FOR TOKEN STORE WHEN USING SUBSCRIBING EVENT PROCESSORS. SEE ABOVE.
-//	@Bean(name = ["axonTokenStore"])
-//	fun axonTokenStore(client: MongoClient?): TokenStore? {
-//		val tokenSerializer: Serializer = XStreamSerializer.builder().build()
-//		return MongoTokenStore.builder()
-//			.serializer(tokenSerializer)
-//			.mongoTemplate(DefaultMongoTemplate.builder().mongoDatabase(client).build())
-//			.build()
-//	}
 
 	companion object {
 		@JvmStatic

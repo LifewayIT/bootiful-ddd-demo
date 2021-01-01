@@ -24,7 +24,6 @@ repositories {
 	}
 }
 
-
 val springDependencies = listOf(
 	"org.springframework.boot:spring-boot-starter-data-mongodb",
 	"org.springframework.boot:spring-boot-starter-data-redis-reactive",

@@ -1,12 +1,14 @@
 package com.lifeway.bootiful.ddd.utils
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import kotlin.reflect.KClass
 
 object Json {
-    private val mapper = ObjectMapper().registerModule(KotlinModule())
+    private val mapper = ObjectMapper().registerModule(KotlinModule()).setSerializationInclusion(JsonInclude.Include.NON_NULL)
+
     fun serialize(any: Any): String = mapper.writeValueAsString(any)
 
     fun createJsonNode(any: Any): JsonNode = mapper.readTree(serialize(any))

@@ -43,6 +43,7 @@ services:
                        cub kafka-ready -b kafka:9092 1 20 && \
                        kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 3 --replication-factor 1 --topic events && \
                        kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 3 --replication-factor 1 --topic commands && \
+                       kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 3 --replication-factor 1 --topic domain.events && \
                        kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 3 --replication-factor 1 --topic __consumer_offsets && \
                        /tmp/dashboard/docker-combined.sh'"
     environment:
