@@ -9,6 +9,7 @@ import org.axonframework.eventhandling.GenericEventMessage
 import org.axonframework.messaging.Message
 import org.axonframework.messaging.interceptors.MessageHandlerInterceptor
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
 import java.util.*
@@ -21,6 +22,9 @@ data class EnterpriseEventJson (val id: String, val eventType: String, val aggre
 @Component
 class InternalEventAdapter(private val kafkaTemplate: KafkaTemplate<String, String>) {
 
+    @Value("\${kafka.eventTopic}")
+    lateinit var eventTopic: String
+
     companion object {
         private val log = LoggerFactory.getLogger(InternalEventAdapter::class.java)
     }
@@ -31,7 +35,7 @@ class InternalEventAdapter(private val kafkaTemplate: KafkaTemplate<String, Stri
     }
 
     private fun publish(enterpriseEvent: EnterpriseEvent<*>): CompletableFuture<Void> {
-         return kafkaTemplate.send("events", enterpriseEvent.aggregateId, Json.serialize(enterpriseEvent)).completable().thenRun {
+         return kafkaTemplate.send(eventTopic, enterpriseEvent.aggregateId, Json.serialize(enterpriseEvent)).completable().thenRun {
              log.debug("Sent event to enterprise: ${enterpriseEvent.id}")
          }
     }

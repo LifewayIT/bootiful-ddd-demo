@@ -2,6 +2,7 @@ package com.lifeway.bootiful.ddd.services
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.lifeway.bootiful.ddd.utils.Json
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
@@ -39,12 +40,16 @@ interface CommandService {
 
 @Component
 class DefaultCommandService(private val kafkaTemplate: KafkaTemplate<String, String>): CommandService {
+
+    @Value("\${kafka.commandTopic}")
+    lateinit var commandTopic: String
+
     private val responseRegistry: MutableMap<String, CompletableFuture<MessageResponse>> = mutableMapOf()
 
     override fun send(command: CommandWrapper): Mono<Unit> {
         return Mono
             .fromFuture(
-                kafkaTemplate.send("commands", command.shardKey, Json.serialize(command)).completable()
+                kafkaTemplate.send(commandTopic, command.shardKey, Json.serialize(command)).completable()
             )
             .map { Unit }
     }
@@ -54,7 +59,7 @@ class DefaultCommandService(private val kafkaTemplate: KafkaTemplate<String, Str
         responseRegistry[command.id] = promise
         return Mono
             .fromFuture(
-                kafkaTemplate.send("commands", command.shardKey, Json.serialize(command.copy(awaitingReply = true))).completable()
+                kafkaTemplate.send(commandTopic, command.shardKey, Json.serialize(command.copy(awaitingReply = true))).completable()
             )
             .flatMap { Mono.fromFuture(promise) }
     }

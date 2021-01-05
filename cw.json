@@ -1,0 +1,20 @@
+{
+  "servicename":"",
+  "buildCommand": "./gradlew bootRepackage",
+  "contexts": {
+    "default": {
+      "skipBuild": false
+    },
+    "deps": {
+      "skipBuild": true,
+      "properties" : {},
+      "services" : [
+        "mongo",
+        "zookeeper",
+        "kafka",
+        "kafka-setup",
+        "redis"
+      ]
+    }
+  }
+}
